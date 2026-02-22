@@ -212,3 +212,10 @@
 #comments > div.card-body > div.add-comment > div > div {
   background: transparent !important;
 }
+
+/* style the index images carousel */
+#IndexImagesCarousel {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
