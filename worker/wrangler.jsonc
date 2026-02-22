@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_date": "2025-02-05",
+  "name": "myoshi-co-bayla-worker",
+  "main": "./index.js",
+  "observability": {
+    "enabled": true,
+  },
+  "routes": [
+    {
+      "pattern": "myoshi-co-bayla-worker.cloudflare.zue.dev",
+      "custom_domain": true,
+    },
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "MYOSHI_CO_BAYLA_KV",
+      "id": "6bcd7c063e244765a4a1ba7834c78a03",
+    },
+  ],
+}
