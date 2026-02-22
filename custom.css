@@ -254,15 +254,3 @@ a {
   bottom: 10px;
   right: 10px;
 }
-
-* {
-  image-rendering: pixelated;
-}
-
-.profile-page {
-  background-image:
-    url("https://github.com/zuedev/myoshi.co-bayla/blob/main/images/background/burn.gif?raw=true"),
-    url("https://github.com/zuedev/myoshi.co-bayla/blob/main/images/background/main.gif?raw=true") !important;
-  background-color: #0f0 !important;
-  min-height: 100vh;
-}
