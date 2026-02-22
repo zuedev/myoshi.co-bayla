@@ -125,9 +125,12 @@ a {
 .profile-display-name {
   color: #ff218c !important; /* pink */
   background: linear-gradient(
-    90deg,
+    135deg,
     #ff218c 0%,
-    #ffd800 50%,
+    #ff218c 33%,
+    #ffd800 33%,
+    #ffd800 66%,
+    #21b3ff 66%,
     #21b3ff 100%
   ) !important; /* pansexual flag colors */
   -webkit-background-clip: text !important;
