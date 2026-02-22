@@ -1,0 +1,214 @@
+/* override theme variables */
+* {
+  --text-md: #fff !important;
+  --vs-text-medium: #fff !important;
+  --vs-text-dark: #fff !important;
+}
+
+/* set all fonts to monospace */
+* {
+  font-family: monospace !important;
+}
+
+/* set profile page background to black */
+.profile-page {
+  background: #000 !important;
+}
+
+/* transparent cards! */
+.card {
+  background: transparent !important;
+}
+
+/* remove card borders */
+.card {
+  border: none !important;
+}
+
+/* hide friends card */
+.profile-left > .card:nth-child(2) {
+  display: none;
+}
+
+/* hide photos card */
+.profile-left > .card:nth-child(3) {
+  display: none;
+}
+
+/* hide groups card */
+.profile-left > .card:nth-child(4) {
+  display: none;
+}
+
+/* hide Details card */
+.profile-left > .card:nth-child(5) {
+  display: none;
+}
+
+/* hide links card */
+.profile-left > .card:nth-child(6) {
+  display: none;
+}
+
+/* hide avatar info card */
+.profile-left > .card:nth-child(7) {
+  display: none;
+}
+
+/* make profile layout a single column */
+.profile-layout {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* stack left and right sections vertically */
+.profile-left,
+.profile-right {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* make the profile layout slimmer */
+.profile-layout {
+  max-width: 666px !important;
+  margin: 0 auto !important;
+}
+
+/* make top bar follow dark theme */
+.profile-top-bar {
+  background: #000 !important;
+  border: none !important;
+}
+
+/* give us some margin at the top */
+.profile-layout {
+  margin-top: 100px !important;
+}
+
+/* hide card headers */
+.card-header {
+  display: none !important;
+}
+
+/* hide about me blurb title */
+.profile-layout
+  > div.profile-right
+  > div:nth-child(1)
+  > div.card-body
+  > div:nth-child(1)
+  > div.blurb-title {
+  display: none;
+}
+
+/* hide about me section links */
+.profile-layout > div.profile-right > div:nth-child(1) > div.section-links {
+  display: none !important;
+}
+
+/* hide song card */
+.profile-right > .card:nth-child(2) {
+  display: none;
+}
+
+/* make display name pansexual */
+.profile-display-name {
+  color: #ff218c !important; /* pink */
+  background: linear-gradient(
+    90deg,
+    #ff218c 0%,
+    #ffd800 50%,
+    #21b3ff 100%
+  ) !important; /* pansexual flag colors */
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  width: fit-content !important;
+  margin: 0 auto !important;
+}
+
+/* hide username */
+.profile-username {
+  display: none !important;
+}
+
+/* make tagline bigger */
+.profile-tagline {
+  font-size: 1.5em !important;
+}
+
+/* hide oshi mark */
+.profile-oshi-mark {
+  display: none !important;
+}
+
+/* hide mood */
+.profile-mood {
+  display: none !important;
+}
+
+/* hide url box */
+.profile-url-box {
+  display: none !important;
+}
+
+/* remove profile avatar border */
+.profile-avatar {
+  border: none !important;
+}
+
+/* fade it in */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.profile-layout {
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards !important;
+}
+
+/* change profile contact links to sharp edges and white on black */
+.profile-contact-links a {
+  border-radius: 0 !important;
+  color: #fff !important;
+  background-color: #000 !important;
+}
+
+/* hide add comment background */
+.add-comment {
+  background: transparent !important;
+}
+
+/* hide alternating comments background */
+.profile-comment:nth-child(2n) {
+  background: transparent !important;
+}
+
+/* make comment body text white */
+.comment-body {
+  color: #fff !important;
+}
+
+/* make add comment button white on black and sharp edges */
+.add-comment button,
+.action-btn.primary {
+  border-radius: 0 !important;
+  border-color: #fff !important;
+  color: #fff !important;
+  background: #000 !important;
+}
+
+/* hide profile status */
+.profile-online-status {
+  display: none !important;
+}
+
+/* hide profile boop stats */
+.profile-boop-stats {
+  display: none !important;
+}
+
+/* hide add comment input background */
+#comments > div.card-body > div.add-comment > div > div {
+  background: transparent !important;
+}
