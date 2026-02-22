@@ -19,7 +19,7 @@ export default {
     @returns {Response} a new Response object
   */
   async fetch(request, environment, context) {
-    if (request.url.endsWith("/counter.svg")) {
+    if (request.url.includes("/counter.svg")) {
       // Increment visitor count in KV storage
       const visitorCount = await environment.MYOSHI_CO_BAYLA_KV.get("count");
       const newCount = visitorCount ? parseInt(visitorCount) + 1 : 1;
