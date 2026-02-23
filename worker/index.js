@@ -48,12 +48,26 @@ export default {
         const { searchParams } = new URL(request.url);
 
         const responseObject = {
+          // Add a unique identifier for the request
           uid: crypto.randomUUID(),
         };
 
+        // Add version metadata from environment variables to the response object
+        for (const [key, value] of Object.entries(
+          environment.CF_VERSION_METADATA,
+        )) {
+          // Ensure the version object exists in the response object
+          if (!responseObject.version) responseObject.version = {};
+
+          // Add the version metadata to the response object if it exists in the environment variables
+          if (value) responseObject.version[key] ||= value;
+        }
+
+        // Include query parameters in the response object if they exist
         if (searchParams.toString())
           responseObject.query = searchParams.toString();
 
+        // Return the response object as JSON
         return new Response(JSON.stringify(responseObject), {
           headers: { "Content-Type": "application/json" },
         });
