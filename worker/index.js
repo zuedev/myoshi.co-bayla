@@ -19,7 +19,7 @@ export default {
     @returns {Response} a new Response object
   */
   async fetch(request, environment, context) {
-    let { pathname, searchParams } = new URL(request.url);
+    let { pathname } = new URL(request.url);
 
     // remove trailing slash if exists
     if (pathname.endsWith("/")) pathname = pathname.slice(0, -1);
