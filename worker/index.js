@@ -19,26 +19,53 @@ export default {
     @returns {Response} a new Response object
   */
   async fetch(request, environment, context) {
-    if (request.url.includes("/counter.svg")) {
-      // Increment visitor count in KV storage
-      const visitorCount = await environment.MYOSHI_CO_BAYLA_KV.get("count");
-      const newCount = visitorCount ? parseInt(visitorCount) + 1 : 1;
-      await environment.MYOSHI_CO_BAYLA_KV.put("count", newCount.toString());
+    try {
+      const { pathname } = new URL(request.url);
 
-      // Generate and return the visitor counter image
-      const imageBlob = await generateVisitorCounterImage(newCount);
-      return new Response(imageBlob, {
-        headers: {
-          "Content-Type": "image/svg+xml",
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
+      if (pathname === "/favicon.ico")
+        return new Response(null, { status: 204 });
+
+      const routes = {
+        "/counter.svg": async () => {
+          // Increment visitor count in KV storage
+          const visitorCount =
+            await environment.MYOSHI_CO_BAYLA_KV.get("count");
+          const newCount = visitorCount ? parseInt(visitorCount) + 1 : 1;
+          await environment.MYOSHI_CO_BAYLA_KV.put(
+            "count",
+            newCount.toString(),
+          );
+
+          // Generate and return the visitor counter image
+          const imageBlob = generateVisitorCounterImage(newCount);
+          return new Response(imageBlob, {
+            headers: {
+              "Content-Type": "image/svg+xml",
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              Pragma: "no-cache",
+              Expires: "0",
+            },
+          });
         },
-      });
-    }
+      };
 
-    // redirect all other requests to https://myoshi.co/bayla
-    return Response.redirect("https://myoshi.co/bayla", 302);
+      if (routes[pathname]) {
+        try {
+          return await routes[pathname]();
+        } catch (error) {
+          console.error("Error handling route:", error);
+          throw new Error("Internal Server Error");
+        }
+      } else {
+        console.error("Route not found:", pathname);
+        throw new Error("Not Found");
+      }
+    } catch (error) {
+      console.error("Error handling request:", error);
+
+      // redirect all other requests to https://myoshi.co/bayla
+      return Response.redirect("https://myoshi.co/bayla", 302);
+    }
   },
 
   /*
