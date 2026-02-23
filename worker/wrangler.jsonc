@@ -19,4 +19,11 @@
       "id": "6bcd7c063e244765a4a1ba7834c78a03",
     },
   ],
+  "secrets_store_secrets": [
+    {
+      "binding": "MYOSHI_CO_BAYLA_API_KEY",
+      "store_id": "df48b01a29a44fe59118b31da3abacbd",
+      "secret_name": "myoshi-co-bayla",
+    },
+  ],
 }

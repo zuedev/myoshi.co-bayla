@@ -19,53 +19,116 @@ export default {
     @returns {Response} a new Response object
   */
   async fetch(request, environment, context) {
-    try {
-      const { pathname } = new URL(request.url);
+    let { pathname, searchParams } = new URL(request.url);
 
-      if (pathname === "/favicon.ico")
-        return new Response(null, { status: 204 });
+    // remove trailing slash if exists
+    if (pathname.endsWith("/")) pathname = pathname.slice(0, -1);
 
-      const routes = {
-        "/counter.svg": async () => {
-          // Increment visitor count in KV storage
-          const visitorCount =
-            await environment.MYOSHI_CO_BAYLA_KV.get("count");
-          const newCount = visitorCount ? parseInt(visitorCount) + 1 : 1;
-          await environment.MYOSHI_CO_BAYLA_KV.put(
-            "count",
-            newCount.toString(),
-          );
+    if (pathname === "/favicon.ico") return new Response(null, { status: 204 });
 
-          // Generate and return the visitor counter image
-          const imageBlob = generateVisitorCounterImage(newCount);
-          return new Response(imageBlob, {
-            headers: {
-              "Content-Type": "image/svg+xml",
-              "Cache-Control": "no-cache, no-store, must-revalidate",
-              Pragma: "no-cache",
-              Expires: "0",
+    const routes = {
+      "/counter.svg": async () => {
+        // Increment visitor count in KV storage
+        const visitorCount = await environment.MYOSHI_CO_BAYLA_KV.get("count");
+        const newCount = visitorCount ? parseInt(visitorCount) + 1 : 1;
+        await environment.MYOSHI_CO_BAYLA_KV.put("count", newCount.toString());
+
+        // Generate and return the visitor counter image
+        const imageBlob = generateVisitorCounterImage(newCount);
+        return new Response(imageBlob, {
+          headers: {
+            "Content-Type": "image/svg+xml",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            Pragma: "no-cache",
+            Expires: "0",
+          },
+        });
+      },
+      "/api": async () => {
+        const { searchParams } = new URL(request.url);
+
+        const responseObject = {
+          uid: crypto.randomUUID(),
+        };
+
+        if (searchParams.toString())
+          responseObject.query = searchParams.toString();
+
+        return new Response(JSON.stringify(responseObject), {
+          headers: { "Content-Type": "application/json" },
+        });
+      },
+      "/graphql/identity/me/username": async () => {
+        const bearer = await environment.MYOSHI_CO_BAYLA_API_KEY.get();
+
+        const response = await fetch("https://api.myoshi.co/graphql", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${bearer}`,
+          },
+          body: JSON.stringify({
+            query: "{ identity { me { username } } }",
+          }),
+        });
+
+        const data = await response.json();
+
+        return new Response(JSON.stringify(data), {
+          headers: { "Content-Type": "application/json" },
+        });
+      },
+      "/api/getCustomCSSByUsername": async () => {
+        const { searchParams } = new URL(request.url);
+        const username = searchParams.get("username");
+        const type = searchParams.get("type");
+
+        if (!username) {
+          return new Response(
+            JSON.stringify({ error: "username is required" }),
+            {
+              status: 400,
+              headers: { "Content-Type": "application/json" },
             },
-          });
-        },
-      };
-
-      if (routes[pathname]) {
-        try {
-          return await routes[pathname]();
-        } catch (error) {
-          console.error("Error handling route:", error);
-          throw new Error("Internal Server Error");
+          );
         }
-      } else {
-        console.error("Route not found:", pathname);
-        throw new Error("Not Found");
-      }
-    } catch (error) {
-      console.error("Error handling request:", error);
 
-      // redirect all other requests to https://myoshi.co/bayla
-      return Response.redirect("https://myoshi.co/bayla", 302);
-    }
+        const bearer = await environment.MYOSHI_CO_BAYLA_API_KEY.get();
+
+        const response = await fetch("https://api.myoshi.co/graphql", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${bearer}`,
+          },
+          body: JSON.stringify({
+            query: `query GetCustomCSS($username: String!) {
+              profiles {
+                profile(username: $username) {
+                  custom_css
+                }
+              }
+            }`,
+            variables: { username },
+          }),
+        });
+
+        const data = await response.json();
+
+        if (type === "file") {
+          const css = data?.data?.profiles?.profile?.custom_css || "";
+          return new Response(css, {
+            headers: { "Content-Type": "text/css" },
+          });
+        }
+
+        return new Response(JSON.stringify(data), {
+          headers: { "Content-Type": "application/json" },
+        });
+      },
+    };
+
+    return await routes[pathname]();
   },
 
   /*
