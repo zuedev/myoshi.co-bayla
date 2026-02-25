@@ -9,8 +9,10 @@ The worker periodically checks for unread notifications on [myoshi.co](https://m
 1. A **cron trigger** (configured in [`wrangler.jsonc`](../wrangler.jsonc)) fires the worker's `scheduled` handler.
 2. The handler calls `checkAndSendNotifications()` from [`notifications.js`](../notifications.js).
 3. The function queries the myoshi.co GraphQL API for the current user's notifications, including `unreadCount` and the notification list.
-4. If there are **no unread notifications**, execution stops early.
-5. Otherwise, an HTML email is built containing only the unread notifications in a table (message + date), and sent via Cloudflare's [Email Routing](https://developers.cloudflare.com/email-routing/) using the `SEND_EMAIL` binding.
+4. If there are **no unread notifications**, execution stops early and the stored deduplication key is cleared.
+5. The current set of unread notification IDs is compared against the last set stored in KV (`last_notified_ids`). If they match, the email is **skipped** to avoid sending duplicate digests.
+6. Otherwise, an HTML email is built containing only the unread notifications in a table (message + date), and sent via Cloudflare's [Email Routing](https://developers.cloudflare.com/email-routing/) using the `SEND_EMAIL` binding.
+7. After sending, the current unread IDs are saved to KV so the same digest is not sent again.
 
 ## Configuration
 
@@ -37,10 +39,11 @@ These must also match the `allowed_sender_addresses` and `allowed_destination_ad
 
 ### Required Bindings
 
-| Binding                   | Type         | Purpose                                    |
-| ------------------------- | ------------ | ------------------------------------------ |
-| `MYOSHI_CO_BAYLA_API_KEY` | Secret Store | Bearer token for the myoshi.co GraphQL API |
-| `SEND_EMAIL`              | Send Email   | Cloudflare Email Routing outbound binding  |
+| Binding                   | Type         | Purpose                                      |
+| ------------------------- | ------------ | -------------------------------------------- |
+| `MYOSHI_CO_BAYLA_API_KEY` | Secret Store | Bearer token for the myoshi.co GraphQL API   |
+| `MYOSHI_CO_BAYLA_KV`      | KV Namespace | Stores `last_notified_ids` for deduplication |
+| `SEND_EMAIL`              | Send Email   | Cloudflare Email Routing outbound binding    |
 
 ## GraphQL Query
 

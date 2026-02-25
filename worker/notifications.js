@@ -96,6 +96,8 @@ function createRawMimeMessage(from, to, subject, htmlBody) {
   });
 }
 
+const KV_KEY_LAST_NOTIFIED_IDS = "last_notified_ids";
+
 export async function checkAndSendNotifications(environment) {
   console.log("Checking notifications...");
 
@@ -108,6 +110,25 @@ export async function checkAndSendNotifications(environment) {
 
   if (notifications.unreadCount === 0) {
     console.log("No unread notifications.");
+    // Clear stored IDs when everything is read
+    await environment.MYOSHI_CO_BAYLA_KV.delete(KV_KEY_LAST_NOTIFIED_IDS);
+    return;
+  }
+
+  // Collect the current set of unread notification IDs
+  const unreadIds = (notifications.list?.edges ?? [])
+    .filter(({ node }) => node && !node.is_read)
+    .map(({ node }) => node.id)
+    .sort()
+    .join(",");
+
+  // Compare against the last set we emailed about
+  const lastNotifiedIds = await environment.MYOSHI_CO_BAYLA_KV.get(
+    KV_KEY_LAST_NOTIFIED_IDS,
+  );
+
+  if (unreadIds === lastNotifiedIds) {
+    console.log("No new notifications since last email. Skipping.");
     return;
   }
 
@@ -126,5 +147,9 @@ export async function checkAndSendNotifications(environment) {
   );
 
   await environment.SEND_EMAIL.send(emailMessage);
+
+  // Store the current unread IDs so we don't re-send for the same set
+  await environment.MYOSHI_CO_BAYLA_KV.put(KV_KEY_LAST_NOTIFIED_IDS, unreadIds);
+
   console.log(`Notification email sent (${notifications.unreadCount} unread).`);
 }
