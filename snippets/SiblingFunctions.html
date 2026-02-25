@@ -1,0 +1,28 @@
+<!-- 
+  This snippet demonstrates the use of the `sibling-index()` function in CSS, which allows you to target sibling elements based on their index. In this example, we have a list of items, and we apply an animation to each item with a staggered delay based on its index. The `animation-delay` is calculated using `calc(sibling-index() * 100ms)`, which means that the first item will have no delay, the second item will have a 100ms delay, the third item will have a 200ms delay, and so on. This creates a cascading animation effect as each item slides in from the left with increasing delays.
+-->
+
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+
+<style>
+  li {
+    animation: slideIn 0.5s ease-out forwards;
+    /* Stagger based on index: 0ms, 100ms, 200ms... */
+    animation-delay: calc(sibling-index() * 100ms);
+    opacity: 0;
+  }
+  @keyframes slideIn {
+    from {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+</style>
