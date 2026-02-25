@@ -21,7 +21,7 @@ jobs:
           node-version: "25"
 
       - name: Install dependencies
-        run: cd worker && npm install
+        run: npm install
 
       - name: Run production tests
-        run: cd worker && npm test -- --testPathPattern=tests/production
+        run: npm test -- --testPathPattern=tests/production
