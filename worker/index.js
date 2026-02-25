@@ -142,6 +142,32 @@ export default {
           headers: { "Content-Type": "application/json" },
         });
       },
+      "/live.svg": async () => {
+        const twitchUsername = "zuedev";
+
+        const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${twitchUsername}-320x180.jpg`;
+
+        const response = await fetch(livePreviewUrl, { redirect: "manual" });
+        const isLive = response.ok;
+
+        const text = isLive ? "live now" : "not live";
+        const color = isLive ? "#22c55e" : "#ef4444";
+
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="20">
+          <rect width="60" height="20" fill="black"/>
+          <text x="0" y="15" fill="${color}" font-family="monospace">${text}</text>
+        </svg>`;
+
+        return new Response(svg, {
+          headers: {
+            "Content-Type": "image/svg+xml",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            Pragma: "no-cache",
+            Expires: "0",
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
+      },
     };
 
     return await routes[pathname]();
