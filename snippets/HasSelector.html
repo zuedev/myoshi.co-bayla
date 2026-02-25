@@ -1,0 +1,20 @@
+<!-- 
+    This snippet demonstrates the use of the `:has()` pseudo-class in CSS, which allows you to select an element based on its descendants. In this example, we have two parent divs, one of which contains a checked checkbox input. The CSS rule applies a different background and border color to the parent div that contains the checked input, showcasing how `:has()` can be used to style elements conditionally based on their content.
+-->
+
+<div class="parent">Normal Parent</div>
+<div class="parent"><input type="checkbox" checked /> I have a checked box</div>
+
+<style>
+  .parent {
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  /* Style the parent ONLY if it contains a checked input */
+  .parent:has(input:checked) {
+    background: #e3f2fd;
+    border-color: #2196f3;
+  }
+</style>
