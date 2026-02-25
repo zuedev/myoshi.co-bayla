@@ -1,71 +1,99 @@
 # `/live.svg` – Twitch Live Status Badge
 
-Returns an SVG badge indicating whether a Twitch channel is currently live.
+A tiny image (badge) that automatically shows whether a Twitch channel is **live** or **offline**. You can drop it into any website, profile page, or README — it updates on its own every time someone loads the page.
 
-## Usage
+- **Live** → displays green "live now" text
+- **Offline** → displays red "not live" text
 
-```html
-<img
-  src="https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg"
-  alt="Twitch live status"
-/>
-```
+No Twitch account or API key is needed to use it.
 
-## How It Works
+## Quick Start
 
-1. The route fetches the Twitch "live preview" image for the given channel (`https://static-cdn.jtvnw.net/previews-ttv/live_user_{channel}-320x180.jpg`).
-2. If the image request succeeds (HTTP 200), the channel is **live**; otherwise it is **offline**.
-3. An SVG is returned with the appropriate text and colour.
-
-No Twitch API key is required — the check relies on the public preview image CDN.
-
-## Query Parameters
-
-All parameters are optional. Defaults are shown below.
-
-| Parameter        | Default    | Description                                |
-| ---------------- | ---------- | ------------------------------------------ |
-| `twitchUsername` | `zuedev`   | Twitch channel name to check               |
-| `isLiveText`     | `live now` | Text displayed when the channel is live    |
-| `notLiveText`    | `not live` | Text displayed when the channel is offline |
-| `isLiveColor`    | `#22c55e`  | Text colour when live (green)              |
-| `notLiveColor`   | `#ef4444`  | Text colour when offline (red)             |
-| `fillColor`      | `black`    | SVG background fill colour                 |
-| `width`          | `60`       | SVG width in pixels                        |
-| `height`         | `20`       | SVG height in pixels                       |
-
-## Examples
-
-### Default (check `zuedev`)
+Just paste this URL wherever images are supported:
 
 ```
 https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg
 ```
 
-### Custom channel and colours
+By default it checks the channel **zuedev**. To check a different channel, add `?twitchUsername=yourchannel` to the end (see [Customisation](#customisation) below).
+
+## Real-World Example
+
+Here's how the badge is used on [custom.html](../../custom.html) — wrapped in a link so clicking it opens the Twitch channel:
+
+```html
+<a href="https://twitch.tv/zuedev" target="_blank">
+  <img src="https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg" />
+</a>
+```
+
+This shows the badge on the page and, when clicked, takes the visitor straight to the Twitch channel.
+
+## How It Works (In Simple Terms)
+
+Every time someone loads the badge image, the server quickly peeks at Twitch's public preview image for the channel. If Twitch has a live preview available, the channel must be streaming — so the badge says "live now." If there's no preview, the channel is offline and the badge says "not live."
+
+## Customisation
+
+You can tweak the badge by adding options to the URL. All options are **optional** — if you leave them out, the defaults shown below are used.
+
+Add options to the URL with `?option=value`. To use more than one, separate them with `&`.
+
+**Example:** `https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?twitchUsername=mychannel&isLiveText=STREAMING`
+
+| Option           | Default    | What it does                                   |
+| ---------------- | ---------- | ---------------------------------------------- |
+| `twitchUsername` | `zuedev`   | The Twitch channel to check                    |
+| `isLiveText`     | `live now` | The text shown when the channel is live        |
+| `notLiveText`    | `not live` | The text shown when the channel is offline     |
+| `isLiveColor`    | `#22c55e`  | Colour of the text when live (default: green)  |
+| `notLiveColor`   | `#ef4444`  | Colour of the text when offline (default: red) |
+| `fillColor`      | `black`    | Background colour of the badge                 |
+| `width`          | `60`       | Width of the badge in pixels                   |
+| `height`         | `20`       | Height of the badge in pixels                  |
+
+> **Tip:** Colours use hex codes. When putting a `#` in a URL, write it as `%23`. For example, bright green `#00ff00` becomes `%2300ff00`.
+
+## More Examples
+
+### Check a different channel
 
 ```
-https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?twitchUsername=mychannel&isLiveColor=%2300ff00&notLiveColor=%23888888
+https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?twitchUsername=mychannel
 ```
 
-### Custom text
+### Change the text
 
 ```
 https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?isLiveText=STREAMING&notLiveText=OFFLINE
 ```
 
-### Embed in Markdown
+### Change the colours
+
+```
+https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?isLiveColor=%2300ff00&notLiveColor=%23888888
+```
+
+### Use in a Markdown file (e.g. a GitHub README)
 
 ```markdown
 ![Live status](https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg)
 ```
 
-## Response
+### Use in HTML with a clickable link to the channel
+
+```html
+<a href="https://twitch.tv/zuedev" target="_blank">
+  <img src="https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg" />
+</a>
+```
+
+## Technical Details
+
+The badge is never cached, so it always reflects the current live status.
 
 | Header                        | Value                                 |
 | ----------------------------- | ------------------------------------- |
 | `Content-Type`                | `image/svg+xml`                       |
 | `Cache-Control`               | `no-cache, no-store, must-revalidate` |
 | `Access-Control-Allow-Origin` | `*`                                   |
-
-The `no-cache` headers ensure the badge is never served stale, so it always reflects the current live status.
