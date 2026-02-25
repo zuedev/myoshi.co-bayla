@@ -153,6 +153,8 @@ export default {
         const fillColor = searchParams.get("fillColor") || "black";
         const width = searchParams.get("width") || "60";
         const height = searchParams.get("height") || "20";
+        const strokeColor = searchParams.get("strokeColor") || "none";
+        const strokeWidth = searchParams.get("strokeWidth") || "0";
 
         const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${twitchUsername}-320x180.jpg`;
 
@@ -164,7 +166,7 @@ export default {
 
         const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
           <rect width="${width}" height="${height}" fill="${fillColor}"/>
-          <text x="0" y="15" fill="${color}" font-family="monospace">${text}</text>
+          <text x="0" y="15" fill="${color}" font-family="monospace" stroke="${strokeColor}" stroke-width="${strokeWidth}">${text}</text>
         </svg>`;
 
         return new Response(svg, {

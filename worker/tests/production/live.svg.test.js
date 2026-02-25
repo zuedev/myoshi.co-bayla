@@ -16,6 +16,10 @@ test("/live.svg defaults", async () => {
 
   // should contain "not live" text
   expect(text).toContain("not live");
+
+  // should contain default stroke attributes
+  expect(text).toContain('stroke="none"');
+  expect(text).toContain('stroke-width="0"');
 });
 
 test("/live.svg parameters", async () => {
@@ -28,6 +32,8 @@ test("/live.svg parameters", async () => {
     fillColor: "#0000ff",
     width: "100",
     height: "50",
+    strokeColor: "white",
+    strokeWidth: "2",
   });
 
   const result = await fetch(`${baseUrl}/live.svg?${parameters.toString()}`);
@@ -54,4 +60,8 @@ test("/live.svg parameters", async () => {
   // should contain custom width and height
   expect(text).toContain('width="100"');
   expect(text).toContain('height="50"');
+
+  // should contain custom stroke attributes
+  expect(text).toContain('stroke="white"');
+  expect(text).toContain('stroke-width="2"');
 });

@@ -51,6 +51,8 @@ Add options to the URL with `?option=value`. To use more than one, separate them
 | `fillColor`      | `black`    | Background colour of the badge                 |
 | `width`          | `60`       | Width of the badge in pixels                   |
 | `height`         | `20`       | Height of the badge in pixels                  |
+| `strokeColor`    | `none`     | Stroke (outline) colour of the text            |
+| `strokeWidth`    | `0`        | Stroke width of the text in pixels             |
 
 > **Tip:** Colours use hex codes. When putting a `#` in a URL, write it as `%23`. For example, bright green `#00ff00` becomes `%2300ff00`.
 
@@ -72,6 +74,12 @@ https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?isLiveText=STREAMING&
 
 ```
 https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?isLiveColor=%2300ff00&notLiveColor=%23888888
+```
+
+### Add a text outline (stroke)
+
+```
+https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?strokeColor=white&strokeWidth=1
 ```
 
 ### Use in a Markdown file (e.g. a GitHub README)
