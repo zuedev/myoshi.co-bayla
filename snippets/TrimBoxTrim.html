@@ -1,0 +1,19 @@
+<!-- 
+    This snippet demonstrates the use of the `text-box-trim` property in CSS, which allows you to control how text is trimmed when it overflows its container. In this example, we have two div elements with the same text content. The first div has `text-box-trim: both`, which means that any overflow will be trimmed on both sides of the text box, resulting in a more compact appearance. The second div does not have this property applied, so it will not trim the text and may overflow its container if the content is too long. The `text-box-edge: cap alphabetic` property is also used to specify that the trimming should occur at the cap height of the font, ensuring that the text is trimmed in a visually appealing way.
+-->
+
+<div class="trim">TRIMMED</div>
+<div class="no-trim">NOT TRIMMED</div>
+
+<style>
+  div {
+    background: yellow;
+    border: 1px solid red;
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  .trim {
+    text-box-trim: both;
+    text-box-edge: cap alphabetic;
+  }
+</style>
