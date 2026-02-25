@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "dev": "npx wrangler dev"
   },
   "dependencies": {
     "jest": "^30.2.0"
