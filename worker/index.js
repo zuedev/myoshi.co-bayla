@@ -143,18 +143,27 @@ export default {
         });
       },
       "/live.svg": async () => {
-        const twitchUsername = "zuedev";
+        const { searchParams } = new URL(request.url);
+
+        const twitchUsername = searchParams.get("twitchUsername") || "zuedev";
+        const isLiveText = searchParams.get("isLiveText") || "live now";
+        const notLiveText = searchParams.get("notLiveText") || "not live";
+        const isLiveColor = searchParams.get("isLiveColor") || "#22c55e";
+        const notLiveColor = searchParams.get("notLiveColor") || "#ef4444";
+        const fillColor = searchParams.get("fillColor") || "black";
+        const width = searchParams.get("width") || "60";
+        const height = searchParams.get("height") || "20";
 
         const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${twitchUsername}-320x180.jpg`;
 
         const response = await fetch(livePreviewUrl, { redirect: "manual" });
         const isLive = response.ok;
 
-        const text = isLive ? "live now" : "not live";
-        const color = isLive ? "#22c55e" : "#ef4444";
+        const text = isLive ? isLiveText : notLiveText;
+        const color = isLive ? isLiveColor : notLiveColor;
 
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="20">
-          <rect width="60" height="20" fill="black"/>
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+          <rect width="${width}" height="${height}" fill="${fillColor}"/>
           <text x="0" y="15" fill="${color}" font-family="monospace">${text}</text>
         </svg>`;
 
