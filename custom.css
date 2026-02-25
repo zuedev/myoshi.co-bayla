@@ -1,108 +1,109 @@
 /* override theme variables */
-* {
+.profile-page.profile-custom-css * {
   --text-md: #fff !important;
   --vs-text-medium: #fff !important;
   --vs-text-dark: #fff !important;
 }
 
 /* set default text to white */
-.profile-layout {
+.profile-page.profile-custom-css .profile-layout {
   color: #fff !important;
 }
 
 /* brighter links */
-a {
+.profile-page.profile-custom-css a {
   color: #fff !important;
   text-decoration: underline dashed #fff !important;
 }
 
 /* set all fonts to monospace */
-* {
+.profile-page.profile-custom-css * {
   font-family: monospace !important;
 }
 
 /* set profile page background to black */
-.profile-page {
+.profile-page.profile-custom-css {
   background: #000 !important;
 }
 
 /* transparent cards! */
-.card {
+.profile-page.profile-custom-css .card {
   background: transparent !important;
 }
 
 /* remove card borders */
-.card {
+.profile-page.profile-custom-css .card {
   border: none !important;
 }
 
 /* hide friends card */
-.profile-left > .card:nth-child(2) {
+.profile-page.profile-custom-css .profile-left > .card:nth-child(2) {
   display: none;
 }
 
 /* hide photos card */
-.profile-left > .card:nth-child(3) {
+.profile-page.profile-custom-css .profile-left > .card:nth-child(3) {
   display: none;
 }
 
 /* hide groups card */
-.profile-left > .card:nth-child(4) {
+.profile-page.profile-custom-css .profile-left > .card:nth-child(4) {
   display: none;
 }
 
 /* hide Details card */
-.profile-left > .card:nth-child(5) {
+.profile-page.profile-custom-css .profile-left > .card:nth-child(5) {
   display: none;
 }
 
 /* hide links card */
-.profile-left > .card:nth-child(6) {
+.profile-page.profile-custom-css .profile-left > .card:nth-child(6) {
   display: none;
 }
 
 /* hide avatar info card */
-.profile-left > .card:nth-child(7) {
+.profile-page.profile-custom-css .profile-left > .card:nth-child(7) {
   display: none;
 }
 
 /* make profile layout a single column */
-.profile-layout {
+.profile-page.profile-custom-css .profile-layout {
   display: flex !important;
   flex-direction: column !important;
 }
 
 /* stack left and right sections vertically */
-.profile-left,
-.profile-right {
+.profile-page.profile-custom-css .profile-left,
+.profile-page.profile-custom-css .profile-right {
   width: 100% !important;
   max-width: 100% !important;
 }
 
 /* make the profile layout slimmer */
-.profile-layout {
+.profile-page.profile-custom-css .profile-layout {
   max-width: 666px !important;
   margin: 0 auto !important;
 }
 
 /* make top bar follow dark theme */
-.profile-top-bar {
+.profile-page.profile-custom-css .profile-top-bar {
   background: #000 !important;
   border: none !important;
 }
 
 /* give us some margin at the top */
-.profile-layout {
+.profile-page.profile-custom-css .profile-layout {
   margin-top: 100px !important;
 }
 
 /* hide card headers */
-.card-header {
+.profile-page.profile-custom-css .card-header {
   display: none !important;
 }
 
 /* hide about me blurb title */
-.profile-layout
+.profile-page.profile-custom-css
+  .profile-layout
   > div.profile-right
   > div:nth-child(1)
   > div.card-body
@@ -112,17 +113,21 @@ a {
 }
 
 /* hide about me section links */
-.profile-layout > div.profile-right > div:nth-child(1) > div.section-links {
+.profile-page.profile-custom-css
+  .profile-layout
+  > div.profile-right
+  > div:nth-child(1)
+  > div.section-links {
   display: none !important;
 }
 
 /* hide song card */
-.profile-right > .card:nth-child(2) {
+.profile-page.profile-custom-css .profile-right > .card:nth-child(2) {
   display: none;
 }
 
 /* make display name pansexual */
-.profile-display-name {
+.profile-page.profile-custom-css .profile-display-name {
   color: #ff218c !important; /* pink */
   background: linear-gradient(
     135deg,
@@ -140,32 +145,32 @@ a {
 }
 
 /* hide username */
-.profile-username {
+.profile-page.profile-custom-css .profile-username {
   display: none !important;
 }
 
 /* make tagline bigger */
-.profile-tagline {
+.profile-page.profile-custom-css .profile-tagline {
   font-size: 1.5em !important;
 }
 
 /* hide oshi mark */
-.profile-oshi-mark {
+.profile-page.profile-custom-css .profile-oshi-mark {
   display: none !important;
 }
 
 /* hide mood */
-.profile-mood {
+.profile-page.profile-custom-css .profile-mood {
   display: none !important;
 }
 
 /* hide url box */
-.profile-url-box {
+.profile-page.profile-custom-css .profile-url-box {
   display: none !important;
 }
 
 /* remove profile avatar border */
-.profile-avatar {
+.profile-page.profile-custom-css .profile-avatar {
   border: none !important;
 }
 
@@ -176,36 +181,36 @@ a {
   }
 }
 
-.profile-layout {
+.profile-page.profile-custom-css .profile-layout {
   opacity: 0;
   animation: fadeIn 1s ease-in-out forwards !important;
 }
 
 /* change profile contact links to sharp edges and white on black */
-.profile-contact-links a {
+.profile-page.profile-custom-css .profile-contact-links a {
   border-radius: 0 !important;
   color: #fff !important;
   background-color: #000 !important;
 }
 
 /* hide add comment background */
-.add-comment {
+.profile-page.profile-custom-css .add-comment {
   background: transparent !important;
 }
 
 /* hide alternating comments background */
-.profile-comment:nth-child(2n) {
+.profile-page.profile-custom-css .profile-comment:nth-child(2n) {
   background: transparent !important;
 }
 
 /* make comment body text white */
-.comment-body {
+.profile-page.profile-custom-css .comment-body {
   color: #fff !important;
 }
 
 /* make add comment button white on black and sharp edges */
-.add-comment button,
-.action-btn.primary {
+.profile-page.profile-custom-css .add-comment button,
+.profile-page.profile-custom-css .action-btn.primary {
   border-radius: 0 !important;
   border-color: #fff !important;
   color: #fff !important;
@@ -213,48 +218,53 @@ a {
 }
 
 /* hide profile status */
-.profile-online-status {
+.profile-page.profile-custom-css .profile-online-status {
   display: none !important;
 }
 
 /* hide profile boop stats */
-.profile-boop-stats {
+.profile-page.profile-custom-css .profile-boop-stats {
   display: none !important;
 }
 
 /* hide add comment input background */
-#comments > div.card-body > div.add-comment > div > div {
+.profile-page.profile-custom-css
+  #comments
+  > div.card-body
+  > div.add-comment
+  > div
+  > div {
   background: transparent !important;
 }
 
 /* style the index images carousel */
-#IndexImagesCarousel {
+.profile-page.profile-custom-css #IndexImagesCarousel {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
 
 /* style the custom content container */
-#CustomContent {
+.profile-page.profile-custom-css #CustomContent {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
 /* put source code link in the bottom right of window */
-#SourceCodeLink {
+.profile-page.profile-custom-css #SourceCodeLink {
   position: fixed;
   bottom: 10px;
   right: 10px;
 }
 
 /* enable smooth scroll on all the things */
-* {
+.profile-page.profile-custom-css * {
   scroll-behavior: smooth !important;
 }
 
 /* style the bottom left widgets container */
-#BottomLeftWidgets {
+.profile-page.profile-custom-css #BottomLeftWidgets {
   display: flex;
   flex-direction: column;
   gap: 10px;
