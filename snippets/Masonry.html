@@ -1,0 +1,23 @@
+<!-- 
+  This is a snippet demonstrating the use of CSS Grid's masonry layout. The `grid-template-rows: masonry` property allows for tight packing of grid items, meaning that items will fill in gaps left by taller items, creating a more compact layout. In this example, we have a grid with two columns and varying row heights, and the items will be arranged in a way that minimizes vertical gaps between them.
+-->
+
+<div class="masonry">
+  <div style="height: 100px">1</div>
+  <div style="height: 150px">2</div>
+  <div style="height: 80px">3</div>
+  <div style="height: 120px">4</div>
+</div>
+
+<style>
+  .masonry {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: masonry; /* Tight packing */
+    gap: 10px;
+  }
+  .masonry div {
+    background: #ddd;
+    border: 1px solid #999;
+  }
+</style>
