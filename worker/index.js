@@ -156,18 +156,27 @@ export default {
         const strokeColor = searchParams.get("strokeColor") || "none";
         const strokeWidth = searchParams.get("strokeWidth") || "0";
 
+        const svgOnline = searchParams.get("svgOnline");
+        const svgOffline = searchParams.get("svgOffline");
+
         const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${twitchUsername}-320x180.jpg`;
 
         const response = await fetch(livePreviewUrl, { redirect: "manual" });
         const isLive = response.ok;
 
-        const text = isLive ? isLiveText : notLiveText;
-        const color = isLive ? isLiveColor : notLiveColor;
+        let svg;
 
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+        if (svgOnline && svgOffline) {
+          svg = isLive ? svgOnline : svgOffline;
+        } else {
+          const text = isLive ? isLiveText : notLiveText;
+          const color = isLive ? isLiveColor : notLiveColor;
+
+          svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
           <rect width="${width}" height="${height}" fill="${fillColor}"/>
           <text x="0" y="15" fill="${color}" font-family="monospace" stroke="${strokeColor}" stroke-width="${strokeWidth}">${text}</text>
         </svg>`;
+        }
 
         return new Response(svg, {
           headers: {

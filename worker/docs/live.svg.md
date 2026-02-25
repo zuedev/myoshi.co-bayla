@@ -41,18 +41,20 @@ Add options to the URL with `?option=value`. To use more than one, separate them
 
 **Example:** `https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?twitchUsername=mychannel&isLiveText=STREAMING`
 
-| Option           | Default    | What it does                                   |
-| ---------------- | ---------- | ---------------------------------------------- |
-| `twitchUsername` | `zuedev`   | The Twitch channel to check                    |
-| `isLiveText`     | `live now` | The text shown when the channel is live        |
-| `notLiveText`    | `not live` | The text shown when the channel is offline     |
-| `isLiveColor`    | `#22c55e`  | Colour of the text when live (default: green)  |
-| `notLiveColor`   | `#ef4444`  | Colour of the text when offline (default: red) |
-| `fillColor`      | `black`    | Background colour of the badge                 |
-| `width`          | `60`       | Width of the badge in pixels                   |
-| `height`         | `20`       | Height of the badge in pixels                  |
-| `strokeColor`    | `none`     | Stroke (outline) colour of the text            |
-| `strokeWidth`    | `0`        | Stroke width of the text in pixels             |
+| Option           | Default    | What it does                                                                   |
+| ---------------- | ---------- | ------------------------------------------------------------------------------ |
+| `twitchUsername` | `zuedev`   | The Twitch channel to check                                                    |
+| `isLiveText`     | `live now` | The text shown when the channel is live                                        |
+| `notLiveText`    | `not live` | The text shown when the channel is offline                                     |
+| `isLiveColor`    | `#22c55e`  | Colour of the text when live (default: green)                                  |
+| `notLiveColor`   | `#ef4444`  | Colour of the text when offline (default: red)                                 |
+| `fillColor`      | `black`    | Background colour of the badge                                                 |
+| `width`          | `60`       | Width of the badge in pixels                                                   |
+| `height`         | `20`       | Height of the badge in pixels                                                  |
+| `strokeColor`    | `none`     | Stroke (outline) colour of the text                                            |
+| `strokeWidth`    | `0`        | Stroke width of the text in pixels                                             |
+| `svgOnline`      | —          | Custom SVG code to show when the channel is live (requires `svgOffline` too)   |
+| `svgOffline`     | —          | Custom SVG code to show when the channel is offline (requires `svgOnline` too) |
 
 > **Tip:** Colours use hex codes. When putting a `#` in a URL, write it as `%23`. For example, bright green `#00ff00` becomes `%2300ff00`.
 
@@ -81,6 +83,16 @@ https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?isLiveColor=%2300ff00
 ```
 https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?strokeColor=white&strokeWidth=1
 ```
+
+### Use fully custom SVG
+
+Provide **both** `svgOnline` and `svgOffline` to completely replace the default badge with your own SVG markup. If only one is provided, it is ignored and the default badge is used.
+
+```
+https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg?svgOnline=<svg xmlns="http://www.w3.org/2000/svg" width="80" height="20"><text y="15" fill="green">🟢 LIVE</text></svg>&svgOffline=<svg xmlns="http://www.w3.org/2000/svg" width="80" height="20"><text y="15" fill="red">⚫ OFF</text></svg>
+```
+
+> **Note:** Remember to URL-encode special characters (`<` → `%3C`, `>` → `%3E`, `"` → `%22`, `#` → `%23`, etc.) when passing SVG in query parameters.
 
 ### Use in a Markdown file (e.g. a GitHub README)
 
