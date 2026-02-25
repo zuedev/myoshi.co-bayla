@@ -19,7 +19,7 @@ By default it checks the channel **zuedev**. To check a different channel, add `
 
 ## Real-World Example
 
-Here's how the badge is used on [custom.html](../../custom.html) — wrapped in a link so clicking it opens the Twitch channel:
+Here's how the badge is used on my own [custom.html](../../custom.html) — wrapped in a link so clicking it opens the Twitch channel:
 
 ```html
 <a href="https://twitch.tv/zuedev" target="_blank">
