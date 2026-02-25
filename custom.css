@@ -241,13 +241,6 @@ a {
   gap: 20px;
 }
 
-/* put the visitor counter in the bottom left of window */
-#VisitorCounter {
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-}
-
 /* put source code link in the bottom right of window */
 #SourceCodeLink {
   position: fixed;
@@ -258,4 +251,14 @@ a {
 /* enable smooth scroll on all the things */
 * {
   scroll-behavior: smooth !important;
+}
+
+/* style the bottom left widgets container */
+#BottomLeftWidgets {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
 }
