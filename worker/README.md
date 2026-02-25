@@ -17,3 +17,7 @@ You can also check if the secret is correctly set up by running:
 ```bash
 npx wrangler secrets-store secret list [STORE-ID]
 ```
+
+## Features
+
+- [Email Notifications](./docs/notifications.md) — Periodically checks for unread myoshi.co notifications and sends an email digest.
