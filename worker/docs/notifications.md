@@ -1,3 +1,5 @@
+![Example notification email](Screenshot%202026-02-25%20155432.png)
+
 # Email Notifications
 
 The worker periodically checks for unread notifications on [myoshi.co](https://myoshi.co) and sends an email digest when new unread notifications are found.
