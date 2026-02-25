@@ -1,0 +1,31 @@
+<!-- 
+    Anchor Positioning
+
+    This example demonstrates how to use anchor positioning to position a tooltip relative to a button. The tooltip will try to position itself above the button, but if there isn't enough space, it will flip to the bottom.
+-->
+
+<button class="anchor">Hover Me</button>
+<div class="tooltip">I am anchored!</div>
+
+<style>
+  .anchor {
+    anchor-name: --my-btn;
+    margin: 100px;
+  }
+
+  .tooltip {
+    position: absolute;
+    position-anchor: --my-btn;
+    position-area: top center;
+    position-try-fallbacks: flip-block;
+    background: black;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    display: none;
+  }
+
+  .anchor:hover + .tooltip {
+    display: block;
+  }
+</style>
