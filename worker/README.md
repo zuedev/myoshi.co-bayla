@@ -1,3 +1,5 @@
+[![Worker Production Tests](https://github.com/zuedev/myoshi.co-bayla/actions/workflows/worker-production-tests.yml/badge.svg)](https://github.com/zuedev/myoshi.co-bayla/actions/workflows/worker-production-tests.yml)
+
 # [myoshi.co/bayla](https://myoshi.co/bayla) Worker
 
 This worker acts as a light backend for [bayla's myoshi.co profile](https://myoshi.co/bayla).
