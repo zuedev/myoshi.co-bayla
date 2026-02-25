@@ -1,0 +1,22 @@
+<!-- 
+  This snippet demonstrates the use of the View Transitions API, which allows for smooth transitions between different states of a web page. In this example, we have a button that toggles dark mode on and off. When the button is clicked, the `startViewTransition` method is called, which captures the current state of the page and then applies the new state (toggling the 'dark' class on the body). The browser will automatically create a transition between the two states, resulting in a smooth visual effect as the background and text colors change. The `animation-duration` property is set to 0.5 seconds to control the speed of the transition.
+-->
+
+<button
+  onclick="
+    document.startViewTransition(() => document.body.classList.toggle('dark'))
+  "
+>
+  Toggle Dark Mode
+</button>
+
+<style>
+  /* Browser automatically cross-fades the snapshots */
+  body.dark {
+    background: #222;
+    color: white;
+  }
+  ::view-transition-group(root) {
+    animation-duration: 0.5s;
+  }
+</style>
