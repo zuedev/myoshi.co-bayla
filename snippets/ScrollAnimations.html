@@ -1,0 +1,31 @@
+<!-- 
+    This example demonstrates how to use the scroll timeline to create a progress bar that fills as you scroll down the page. The animation is defined using CSS keyframes, and the scroll timeline is applied to the animation to control its progress based on the scroll position of the root element (the viewport). As you scroll down, the progress bar will fill from left to right, giving a visual indication of how far you've scrolled through the page.
+-->
+
+<div class="progress"></div>
+<div style="height: 200vh; padding: 20px">
+  Scroll down to see the bar fill...
+</div>
+
+<style>
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: #007bff;
+    transform-origin: 0% 50%;
+    animation: grow linear;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+</style>
