@@ -15,7 +15,7 @@ Just paste this URL wherever images are supported:
 https://myoshi-co-bayla-worker.cloudflare.zue.dev/live.svg
 ```
 
-By default it checks the channel **zuedev**. To check a different channel, add `?twitchUsername=yourchannel` to the end (see [Customisation](#customisation) below).
+By default it checks the channel **zuedev** (mine). To check a different channel, add `?twitchUsername=yourchannel` to the end (see [Customisation](#customisation) below).
 
 ## Real-World Example
 
