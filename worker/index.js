@@ -306,6 +306,6 @@ export default {
   */
   async scheduled(event, environment, context) {
     console.log("Scheduled event triggered!");
-    await checkAndSendNotifications(environment);
+    // await checkAndSendNotifications(environment); // TODO: disabled for now due to daily limits of 1000 Workers KV delete operations
   },
 };
