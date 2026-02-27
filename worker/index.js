@@ -1,5 +1,20 @@
 import { checkAndSendNotifications } from "./notifications.js";
 
+function formatRelativeTime(timestamp) {
+  const now = Date.now();
+  const diff = now - timestamp;
+
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days}d ago`;
+  if (hours > 0) return `${hours}h ago`;
+  if (minutes > 0) return `${minutes}m ago`;
+  return "just now";
+}
+
 function generateVisitorCounterImage(visitorCount) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="20">
     <rect width="200" height="20" fill="black"/>
@@ -147,7 +162,6 @@ export default {
 
         const twitchUsername = searchParams.get("twitchUsername") || "zuedev";
         const isLiveText = searchParams.get("isLiveText") || "live now";
-        const notLiveText = searchParams.get("notLiveText") || "not live";
         const isLiveColor = searchParams.get("isLiveColor") || "#22c55e";
         const notLiveColor = searchParams.get("notLiveColor") || "#ef4444";
         const fillColor = searchParams.get("fillColor") || "black";
@@ -158,11 +172,33 @@ export default {
 
         const svgOnline = searchParams.get("svgOnline");
         const svgOffline = searchParams.get("svgOffline");
+        const showLastOnline = searchParams.has("showLastOnline");
 
         const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${twitchUsername}-320x180.jpg`;
 
         const response = await fetch(livePreviewUrl, { redirect: "manual" });
         const isLive = response.ok;
+
+        // Build the offline text, optionally with "last online" info
+        let notLiveText = searchParams.get("notLiveText") || "not live";
+
+        if (showLastOnline) {
+          const kvKey = `live_lastOnline_${twitchUsername}`;
+
+          if (isLive) {
+            // Store current timestamp as last online time
+            await environment.MYOSHI_CO_BAYLA_KV.put(
+              kvKey,
+              Date.now().toString(),
+            );
+          } else {
+            const lastOnline = await environment.MYOSHI_CO_BAYLA_KV.get(kvKey);
+
+            if (lastOnline) {
+              notLiveText += ` (${formatRelativeTime(parseInt(lastOnline))})`;
+            }
+          }
+        }
 
         let svg;
 
