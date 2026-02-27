@@ -251,13 +251,6 @@ a {
   gap: 20px;
 }
 
-/* put source code link in the bottom right of window */
-#SourceCodeLink {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-}
-
 /* enable smooth scroll on all the things */
 * {
   scroll-behavior: smooth !important;
@@ -268,7 +261,4 @@ a {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
 }
