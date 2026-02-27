@@ -1,0 +1,22 @@
+/* hide "main profile" card */
+.profile-left > .card:nth-child(1),
+/* hide "top friends" card */
+.profile-left > .card:nth-child(2),
+/* hide "photos" card */
+.profile-left > .card:nth-child(3),
+/* hide "groups" card */
+.profile-left > .card:nth-child(4),
+/* hide "details" card */
+.profile-left > .card:nth-child(5),
+/* hide "links" card */
+.profile-left > .card:nth-child(6),
+/* hide "avatar info" card */
+.profile-left > .card:nth-child(7),
+/* hide "blurbs" card */
+.profile-right > .card:nth-child(1) ,
+/* hide "profile song" card */
+.profile-right > .card:nth-child(2),
+/* hide "comments" card */
+.profile-right > .card:nth-child(3) {
+  display: none;
+}
