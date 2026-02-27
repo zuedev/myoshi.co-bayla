@@ -174,10 +174,61 @@ export default {
         const svgOffline = searchParams.get("svgOffline");
         const showLastOnline = searchParams.has("showLastOnline");
 
-        const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${twitchUsername}-320x180.jpg`;
+        async function getTwitchLiveStatus(username) {
+          const user = username.toLowerCase();
 
-        const response = await fetch(livePreviewUrl, { redirect: "manual" });
-        const isLive = response.ok;
+          let isLive = false;
+
+          // do NOT document or use the `liveCheckMethod` parameter, it's an internal parameter for testing different live check methods without redeploying the worker and is highly subject to change or removal without notice
+          let liveCheckMethod = searchParams.get("liveCheckMethod") || "gql";
+
+          const liveCheckMethods = {
+            thumbnail: async () => {
+              const cacheBuster = Date.now();
+              const livePreviewUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${user}-320x180.jpg?${cacheBuster}`;
+              const response = await fetch(livePreviewUrl, {
+                redirect: "manual",
+              });
+
+              return (isLive = response.status === 200);
+            },
+            decapi: async () => {
+              const response = await fetch(
+                `https://decapi.me/twitch/uptime/${user}`,
+              );
+              const text = await response.text();
+
+              isLive = !text.includes("is offline");
+            },
+            gql: async () => {
+              const response = await fetch("https://gql.twitch.tv/gql", {
+                method: "POST",
+                headers: {
+                  "Client-Id": "kimne78kx3ncx6brgo4mv6wki5h1ko", // Twitch's public frontend ID
+                  "Content-Type": "application/json",
+                },
+                // GraphQL query asking for the user's stream data
+                body: JSON.stringify({
+                  query: `query { user(login: "${user}") { stream { id type } } }`,
+                }),
+              });
+
+              const data = await response.json();
+
+              isLive = data?.data?.user?.stream?.type === "live";
+            },
+          };
+
+          console.log(
+            `Using method "${liveCheckMethod}" to check live status for "${user}"`,
+          );
+
+          await liveCheckMethods[liveCheckMethod]();
+
+          return isLive;
+        }
+
+        const isLive = await getTwitchLiveStatus(twitchUsername);
 
         // Build the offline text, optionally with "last online" info
         let notLiveText = searchParams.get("notLiveText") || "not live";
